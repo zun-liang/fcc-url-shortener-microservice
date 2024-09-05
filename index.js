@@ -1,14 +1,14 @@
 import * as dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
-import { StatusCodes } from "http-status-codes";
+import mongoose from "mongoose";
+import router from "./router";
 
 dotenv.config();
 const app = express();
 
-const port = process.env.PORT || 3000;
-
 app.use(cors());
+app.use(express.json());
 
 app.use("/public", express.static(`${process.cwd()}/public`));
 
@@ -16,6 +16,16 @@ app.get("/", (req, res) => {
   res.sendFile(process.cwd() + "/views/index.html");
 });
 
-app.listen(port, () => {
-  console.log(`Listening on port ${port}`);
-});
+app.post("/api/shorturl", router);
+
+const port = process.env.PORT || 3000;
+
+try {
+  await mongoose.connect(process.env.MONGO_URI);
+  app.listen(port, () => {
+    console.log(`Listening on port ${port}...`);
+  });
+} catch (error) {
+  console.log(error);
+  process.exit(1);
+}

@@ -18,7 +18,8 @@ This is a solution to the [URL Shortener Microservice](https://www.freecodecamp.
 
 Users should be able to:
 
--
+- Shorten url
+- Redirect to original url using short url
 
 ### Links
 
@@ -33,10 +34,13 @@ Users should be able to:
 - JavaScript
 - Node.js
 - Express.js
+- MongoDB
+- Mongoose
+- shortid
 
 ### What I learned
 
--
+- How to use dns.lookup(hostname, callback) to verify url
 
 ## Author
 

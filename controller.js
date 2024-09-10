@@ -40,6 +40,6 @@ export const redirectToOriginalUrl = async (req, res) => {
     res.status(StatusCodes.BAD_REQUEST).json({ error: "invalid url" });
   } catch (error) {
     console.log(error);
-    res.status(StatusCodes.BAD_REQUEST).json({ error });
+    res.status(StatusCodes.BAD_REQUEST).json({ error: "invalid url" });
   }
 };

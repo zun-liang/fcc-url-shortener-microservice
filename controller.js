@@ -26,6 +26,10 @@ export const shortenUrl = async (req, res) => {
   }
 };
 
+export const notFound = (req, res) => {
+  res.status(StatusCodes.NOT_FOUND).json({ error: "Not Found" });
+};
+
 export const redirectToOriginalUrl = async (req, res) => {
   try {
     const { shortUrl } = req.params;

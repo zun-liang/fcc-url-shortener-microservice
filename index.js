@@ -2,13 +2,14 @@ import * as dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
-import router from "./router";
+import router from "./router.js";
 
 dotenv.config();
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use("/public", express.static(`${process.cwd()}/public`));
 
@@ -16,7 +17,7 @@ app.get("/", (req, res) => {
   res.sendFile(process.cwd() + "/views/index.html");
 });
 
-app.post("/api/shorturl", router);
+app.use("/api/shorturl", router);
 
 const port = process.env.PORT || 3000;
 

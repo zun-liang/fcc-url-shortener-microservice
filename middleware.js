@@ -7,7 +7,7 @@ export const validateUrl = (req, res, next) => {
   if (!hostname || !protocol) {
     return res.status(StatusCodes.BAD_REQUEST).json({ error: "invalid url" });
   }
-  const urlRegex = /^(http|https)(:\/\/)/;
+  const urlRegex = /^(http|https):\/\//;
   if (!urlRegex.test(inputUrl)) {
     return res.status(StatusCodes.BAD_REQUEST).json({ error: "invalid url" });
   }

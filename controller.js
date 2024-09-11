@@ -1,4 +1,3 @@
-import { StatusCodes } from "http-status-codes";
 import Url from "./model.js";
 import shortid from "shortid";
 
@@ -7,9 +6,10 @@ export const shortenUrl = async (req, res) => {
     const originalUrl = req.body.url;
     const existingUrl = await Url.findOne({ original_url: originalUrl });
     if (existingUrl) {
-      return res
-        .status(StatusCodes.OK)
-        .json({ original_url: originalUrl, short_url: existingUrl.short_url });
+      return res.json({
+        original_url: originalUrl,
+        short_url: existingUrl.short_url,
+      });
     }
 
     const shortUrl = shortid.generate();
@@ -17,17 +17,18 @@ export const shortenUrl = async (req, res) => {
       original_url: originalUrl,
       short_url: shortUrl,
     });
-    res
-      .status(StatusCodes.OK)
-      .json({ original_url: newUrl.original_url, short_url: newUrl.short_url });
+    res.json({
+      original_url: newUrl.original_url,
+      short_url: newUrl.short_url,
+    });
   } catch (error) {
     console.log(error);
-    res.status(StatusCodes.BAD_REQUEST).json({ error });
+    res.json({ error });
   }
 };
 
 export const notFound = (req, res) => {
-  res.status(StatusCodes.BAD_REQUEST).json({ error: "invalid url" });
+  res.json({ error: "invalid url" });
 };
 
 export const redirectToOriginalUrl = async (req, res) => {
@@ -37,9 +38,9 @@ export const redirectToOriginalUrl = async (req, res) => {
     if (targetUrl) {
       return res.redirect(targetUrl.original_url);
     }
-    res.status(StatusCodes.BAD_REQUEST).json({ error: "invalid url" });
+    res.json({ error: "invalid url" });
   } catch (error) {
     console.log(error);
-    res.status(StatusCodes.BAD_REQUEST).json({ error: "invalid url" });
+    res.json({ error: "invalid url" });
   }
 };
